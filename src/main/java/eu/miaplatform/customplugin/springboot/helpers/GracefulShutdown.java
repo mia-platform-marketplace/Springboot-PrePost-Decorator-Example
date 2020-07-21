@@ -1,4 +1,4 @@
-package eu.miaplatform.customplugin.springboot;
+package eu.miaplatform.customplugin.springboot.helpers;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationListener;
