@@ -5,12 +5,16 @@ import eu.miaplatform.customplugin.springboot.models.Message;
 import eu.miaplatform.decorators.DecoratorResponse;
 import eu.miaplatform.decorators.DecoratorResponseFactory;
 import eu.miaplatform.decorators.predecorators.PreDecoratorRequest;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@Api(value = "preDecorator")
 public class PreDecorator {
     @PostMapping("/checkwho")
     @ApiOperation(value = "Add token header")
