@@ -17,17 +17,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Api(value = "preDecorator")
 public class PreDecorator {
     @PostMapping("/checkwho")
-    @ApiOperation(value = "Add token header")
+    @ApiOperation(value = "Change user name")
     @ResponseBody
     public ResponseEntity checkWho(@RequestBody PreDecoratorRequest request) {
         final String defaultWho = "John Doe";
         Message originalBody = (Message) request.getOriginalRequestBody();
         String newWho = originalBody.getWho();
         if (newWho == null) {
-            newWho = request.getUserId();
-            if (newWho == null) {
-                newWho = defaultWho;
-            }
+            newWho = request.getUserId() == null ? defaultWho : request.getUserId();
         }
         Message newBody = new Message(originalBody.getMymsg(), newWho);
         PreDecoratorRequest updatedRequest = request.changeOriginalRequest()

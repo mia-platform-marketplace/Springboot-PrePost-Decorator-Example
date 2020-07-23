@@ -31,7 +31,7 @@ public class PostDecorator {
         Message body = (Message) request.getOriginalRequestBody();
         String mymsg = body.getMymsg();
         String who = body.getWho();
-        InitServiceOptions initServiceOptions = InitServiceOptions.builder().build();
+        InitServiceOptions initServiceOptions = new InitServiceOptions();
         Service service = ServiceClientFactory.getDirectServiceProxy(serviceName, initServiceOptions);
         Response response;
         try {
