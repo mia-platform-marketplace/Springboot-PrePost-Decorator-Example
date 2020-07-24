@@ -1,7 +1,8 @@
-package eu.miaplatform.customplugin.springboot.Decorators;
+package eu.miaplatform.customplugin.springboot.controllers.Decorators;
 
 import eu.miaplatform.customplugin.ServiceClientFactory;
 import eu.miaplatform.customplugin.springboot.DecoratorUtils;
+import eu.miaplatform.customplugin.springboot.controllers.Controller;
 import eu.miaplatform.customplugin.springboot.models.Message;
 import eu.miaplatform.decorators.DecoratorResponse;
 import eu.miaplatform.decorators.DecoratorResponseFactory;
@@ -9,26 +10,22 @@ import eu.miaplatform.decorators.postdecorators.PostDecoratorRequest;
 import eu.miaplatform.service.InitServiceOptions;
 import eu.miaplatform.service.Service;
 import eu.miaplatform.service.environment.EnvConfiguration;
-import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import okhttp3.Response;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 
 @RestController
-@Api(value = "postDecorator")
+@RequestMapping("/post")
 public class PostDecorator {
     @PostMapping("/notify")
     @ApiOperation(value = "Notify user on Slack")
     @ResponseBody
-    public ResponseEntity checkWho(@RequestBody PostDecoratorRequest request) {
+    public ResponseEntity checkWho(@RequestBody PostDecoratorRequest<Message> request) {
         final String serviceName = EnvConfiguration.getInstance().get("SERVICE_NAME");
-        Message body = (Message) request.getOriginalRequestBody();
+        Message body = request.getOriginalRequestBody();
         String mymsg = body.getMymsg();
         String who = body.getWho();
         InitServiceOptions initServiceOptions = new InitServiceOptions();
@@ -41,8 +38,8 @@ public class PostDecorator {
             return null;
         }
         System.out.println("Slack service response: " + response.code());
-        PostDecoratorRequest unmodifiedRequest = request.leaveOriginalResponseUnmodified();
-        DecoratorResponse decoratorResponse = DecoratorResponseFactory.makePostDecoratorResponse(unmodifiedRequest);
+        PostDecoratorRequest<Message> unmodifiedRequest = request.leaveOriginalResponseUnmodified();
+        DecoratorResponse<Message> decoratorResponse = DecoratorResponseFactory.makePostDecoratorResponse(unmodifiedRequest);
         return DecoratorUtils.getResponseEntityFromDecoratorResponse(decoratorResponse);
     }
 }
