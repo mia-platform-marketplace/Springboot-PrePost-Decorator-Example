@@ -2,7 +2,6 @@ package eu.miaplatform.customplugin.springboot.controllers.Decorators;
 
 import eu.miaplatform.customplugin.ServiceClientFactory;
 import eu.miaplatform.customplugin.springboot.DecoratorUtils;
-import eu.miaplatform.customplugin.springboot.controllers.Controller;
 import eu.miaplatform.customplugin.springboot.models.Message;
 import eu.miaplatform.decorators.DecoratorResponse;
 import eu.miaplatform.decorators.DecoratorResponseFactory;
@@ -23,7 +22,7 @@ public class PostDecorator {
     @PostMapping("/notify")
     @ApiOperation(value = "Notify user on Slack")
     @ResponseBody
-    public ResponseEntity checkWho(@RequestBody PostDecoratorRequest<Message> request) {
+    public ResponseEntity checkWho(@RequestBody PostDecoratorRequest<Message, Message> request) {
         final String serviceName = EnvConfiguration.getInstance().get("SERVICE_NAME");
         Message body = request.getOriginalRequestBody();
         String mymsg = body.getMymsg();
@@ -38,7 +37,7 @@ public class PostDecorator {
             return null;
         }
         System.out.println("Slack service response: " + response.code());
-        PostDecoratorRequest<Message> unmodifiedRequest = request.leaveOriginalResponseUnmodified();
+        PostDecoratorRequest<Message, Message> unmodifiedRequest = request.leaveOriginalResponseUnmodified();
         DecoratorResponse<Message> decoratorResponse = DecoratorResponseFactory.makePostDecoratorResponse(unmodifiedRequest);
         return DecoratorUtils.getResponseEntityFromDecoratorResponse(decoratorResponse);
     }
