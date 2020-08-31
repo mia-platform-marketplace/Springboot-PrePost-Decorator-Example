@@ -35,7 +35,7 @@ public class PostDecorator {
         Message body = getBodyFromRequest(request);
         String mymsg = body.getMymsg();
         String who = body.getWho();
-        InitServiceOptions initServiceOptions = new InitServiceOptions(3001, Protocol.HTTP, Collections.emptyMap(), null);
+        InitServiceOptions initServiceOptions = new InitServiceOptions(8081, Protocol.HTTP, Collections.emptyMap(), null);
         Service service = ServiceClientFactory.getDirectServiceProxy(serviceName, initServiceOptions);
         Response slackResponse = getSlackResponse(service, who, mymsg);
         if (slackResponse != null) {
@@ -57,7 +57,7 @@ public class PostDecorator {
     public Response getSlackResponse(Service service, String who, String mymsg) {
         Response response;
         try {
-            response = service.post("/notify-slack", "{ text: " + who + " says: " + mymsg + "}", null, null);
+            response = service.post("notify-slack", "{\"text\":\"" + who + " says: " + mymsg + "\"}", null, null);
         } catch (IOException ex) {
             ex.printStackTrace();
             return null;

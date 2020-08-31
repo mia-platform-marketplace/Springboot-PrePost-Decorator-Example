@@ -23,7 +23,6 @@ public class PreDecorator {
     @ApiOperation(value = "Change user name")
     @ResponseBody
     public ResponseEntity<Serializable> checkWho(@RequestBody PreDecoratorRequest request) throws JsonProcessingException {
-        final String defaultWho = "John Doe";
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
         Gson gson = new Gson();
@@ -31,8 +30,7 @@ public class PreDecorator {
         Message originalBody = objectMapper.readValue(jsonRequestBody, Message.class);
         String newWho = originalBody.getWho();
         if (newWho == null) {
-            newWho = ((request.getOriginalRequestHeaders() == null) || (request.getUserId() == null)) ? defaultWho
-                    : request.getUserId();
+            newWho = getNewUserId(request);
         }
         Message newBody = new Message(newWho, originalBody.getMymsg());
         PreDecoratorRequest updatedRequest = request.changeOriginalRequest()
@@ -40,5 +38,14 @@ public class PreDecorator {
                 .build();
         DecoratorResponse response = DecoratorResponseFactory.makePreDecoratorResponse(updatedRequest);
         return DecoratorUtils.getResponseEntityFromDecoratorResponse(response);
+    }
+
+    private String getNewUserId(PreDecoratorRequest request) {
+        final String defaultWho = "John Doe";
+        try {
+            return request.getUserId();
+        } catch (Exception ex) {
+            return defaultWho;
+        }
     }
 }
