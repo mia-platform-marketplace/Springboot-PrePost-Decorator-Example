@@ -165,11 +165,6 @@
             <version>0.0.2</version>
         </dependency>
         <dependency>
-            <groupId>eu.mia-platform</groupId>
-            <artifactId>custom-plugin-java</artifactId>
-            <version>0.0.5</version>
-        </dependency>
-        <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>3.12.0</version>
