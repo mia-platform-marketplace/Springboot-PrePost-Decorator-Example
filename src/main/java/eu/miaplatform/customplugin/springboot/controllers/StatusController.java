@@ -6,5 +6,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @Api(value = "controller")
-public class Controller extends CPStatusController {
+public class StatusController extends CPStatusController {
 }
