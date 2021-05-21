@@ -2,6 +2,10 @@
 
 Welcome to Java Spring Boot example service for Mia-Platform!
 
+## Current Version
+
+This example is currently based on Java SE 11 (LTS)
+
 ## Summary
 
 %CUSTOM_PLUGIN_SERVICE_DESCRIPTION%
