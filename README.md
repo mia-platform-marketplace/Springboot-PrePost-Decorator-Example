@@ -32,9 +32,8 @@ This guide will help you to:
 Are you ready? Follow the next steps to complete the setup and run in production your first hook!
 
 > :warning:
-> Please verify **CPU and memory limits**, for Java applications using Springboot we recommend at least:
-> * Memory: minimum **150Mi**, maximum **300Mi**
-> * CPU: minimum **30m**, maximum **1000m**
+> Please once the service is installed in your project verify **Probes** confiugration, boot time of Springboot applications may be long
+> so you might want to propertly tune readiness and liveness probes.
 
 ### Step 1 - Create the Notifier Service
 
