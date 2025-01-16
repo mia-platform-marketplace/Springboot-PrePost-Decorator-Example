@@ -1,5 +1,7 @@
 # mia_template_service_name_placeholder
 
+> ⚠️ Warning: This repository is no longer maintained.
+
 Welcome to Java Spring Boot example service for Mia-Platform!
 
 ## Current Version
